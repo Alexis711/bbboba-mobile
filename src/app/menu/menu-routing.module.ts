@@ -5,7 +5,7 @@ import { MenuPage } from './menu.page';
 
 const routes: Routes = [
   {
-    path: 'menu',
+    path: '',
     component: MenuPage,
     children: [
       {
@@ -21,6 +21,14 @@ const routes: Routes = [
         loadChildren: () => import('./ventas/ventas.module').then( m => m.VentasPageModule)
       },
       {
+        path: 'login',
+        loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+      },
+      {
+        path: 'perfil',
+        loadChildren: () => import('./perfil/perfil.module').then( m => m.PerfilPageModule)
+      },
+      {
         path: '',
         redirectTo: '/menu/ticket',
         pathMatch: 'full'
@@ -32,7 +40,6 @@ const routes: Routes = [
     redirectTo: '/menu/ticket',
     pathMatch: 'full'
   }
-
 ];
 
 @NgModule({

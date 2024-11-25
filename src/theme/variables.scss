@@ -1,2 +1,63 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+
+:root {
+    --font-size-xs: 0.2rem;
+    --font-size-sm: 1.2rem;
+    --font-size-md: 2.2rem;
+    --font-size-sm: 3.2rem;
+    --font-size-xs: 4.2rem;
+    --font-size-sm: 5.2rem;
+
+    --background-color: #f8e7ff;
+    --primary-color: #8d52c0;
+    --secondary-color: #f1b7ea;
+    --tertiary-color: #6f55b8;
+    --success-color: #0ead69;
+    --warning-color: #fca311;
+    --danger-color: #ef233c;
+    --dark-color: #3c2d57;
+    --medium-color: #aa91b4;
+    --light-color: #f6eafb;
+    --white-color: #ffffff;
+    --black-color: #000000;
+
+    --ion-item-background: var(--background-color); 
+    --ion-background-color: var(--background-color);
+    --ion-text-color: var(--dark-color);
+    --ion-color-primary: var(--primary-color);
+    --ion-color-secondary: var(--secondary-color);
+    --ion-color-tertiary: var(--tertiary-color);
+    --ion-color-light: var(--light-color);
+    --ion-color-dark: var(--dark-color);
+    --ion-color-warning: var(--warning-color);
+    --ion-color-success: var(--success-color);
+    --ion-color-white: var(--white-color);
+
+    /*--ion-item-background: var(--background-color) 
+    --ion-background-color: var(--background-color);
+    --ion-text-color: var(--dark-neutral);
+    --ion-color-primary: var(--primary-color);
+    --ion-color-secondary: var(--secondary-color);
+    --ion-color-tertiary: var(--accent-color);
+    --ion-color-light: var(--light-neutral);
+    --ion-color-dark: var(--dark-neutral);
+    --ion-color-warning: var(--warning-color);
+    --ion-color-success: var(--success-color);
+    --ion-color-white: var(--white-color);*/
+}
+
+:root[theme='dark'] {
+    --background-color: #3c2d57;
+    --primary-color: #7b4ba4;
+    --secondary-color: #2a203d;
+    --tertiary-color: #5d479a;
+    --success-color: #8fe968;
+    --warning-color: #ffea56;
+    --danger-color: #fe797b;
+    --dark-color: #523e75;
+    --medium-color: #9983b9;
+    --light-color: #dac2e4;
+    --white-color: #ffffff;
+    --black-color: #000000;
+}
