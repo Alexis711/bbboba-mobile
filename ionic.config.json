@@ -1,0 +1,7 @@
+{
+  "name": "bbboba-mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
