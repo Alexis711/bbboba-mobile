@@ -35,3 +35,16 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
+
+ion-content {
+    --background: var(--light-color);
+}
+
+ion-grid {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+ion-row {
+    width: 100%;
+}

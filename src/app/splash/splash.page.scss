@@ -1,0 +1,37 @@
+ion-row {
+    justify-content: center;
+}
+
+ion-label {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+ion-avatar {
+    width: 10rem;
+    height: 10rem;
+}
+
+.label-inferior {
+    font-size: x-small;
+    text-align: left;
+}
+
+.row-avatar {
+    padding-top: 12rem;
+}
+
+.row-spinner {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+.row-version {
+    padding-top: 9rem;
+    padding-bottom: 1rem;
+}
+
+.col-version {
+    text-align: end;
+}
+
