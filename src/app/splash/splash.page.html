@@ -1,13 +1,23 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>splash</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">splash</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-grid>
+    <ion-row class="row-avatar">
+      <ion-avatar>
+        <img src="../../assets/icon/babyboba.jpg"/>
+      </ion-avatar>
+    </ion-row>
+    <ion-row>
+      <ion-label>Baby Boba</ion-label>
+    </ion-row>
+    <ion-row class="row-spinner">
+        <ion-spinner name="circular"></ion-spinner>
+    </ion-row>
+    <ion-row class="row-version">
+      <ion-col size="6">
+        <ion-label class="label-inferior">Aleft</ion-label>
+      </ion-col>
+      <ion-col size="6" class="col-version">
+        <ion-label class="label-inferior">Version 1.0.0</ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
