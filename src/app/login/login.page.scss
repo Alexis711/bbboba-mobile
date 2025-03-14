@@ -1,0 +1,45 @@
+ion-label {
+    font-size: large;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    font-weight: 600;
+}
+
+ion-input {
+    background: var(--white-color);
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+}
+
+ion-button {
+    width: 100%;
+    text-transform: capitalize;
+    font-size: large;
+    margin-top: 1rem;
+    --border-radius: 10px;
+    --background: var(--dark-color);
+    --color: var(--white-color);
+}
+
+.btn-iniciar {
+    --background: var(--white-color);
+    --color: var(--dark-color);
+}
+
+.row-titulo {
+    text-align: center;
+    justify-content: center;
+}
+
+.label-titulo {
+    font-size: x-large;
+    font-weight: 700;
+    padding-top: 4rem;
+}
+
+.row-contenido {
+    padding-top: 4rem;
+    padding-bottom: 2.5rem;
+}
