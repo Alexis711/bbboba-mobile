@@ -1,0 +1,36 @@
+ion-content {
+    --padding-top: 1rem;
+}
+
+ion-col.opciones-grafica {
+    display: flex;
+}
+
+ion-item {
+    --background: var(--secondary-color);
+    width: 50%;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    border-radius: 10px;
+}
+
+canvas {
+    margin: 2rem;
+}
+
+ion-card {
+    border-radius: 10px;
+}
+
+ion-col.vetical-center {
+    display: flex;
+    align-items: center;
+    background: red;
+    color: white;
+}
+
+ion-label.porcentaje {
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+    white-space: nowrap;
+}
