@@ -19,8 +19,7 @@
     --dark-color: #3c2d57;
     --medium-color: #aa91b4;
     --light-color: #e6d5ed;
-    --white-color: #ffffff;
-    --black-color: #000000;
+    --text-inverso-color: #000000;
 }
 
 :root[theme='dark'] {
@@ -34,8 +33,7 @@
     --dark-color: #523e75;
     --medium-color: #9983b9;
     --light-color: #e6d5ed;
-    --white-color: #ffffff;
-    --black-color: #000000;
+    --text-inverso-color: #ffffff;
     --ion-color-light: var(--light-neutral);
     --ion-color-dark: var(--dark-neutral);
 }
