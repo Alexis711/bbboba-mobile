@@ -2,6 +2,10 @@ ion-row {
     width: 100%;
 }
 
+ion-title {
+    text-align: center;
+}
+
 ion-card {
     border-radius: 15px;
     width: 100%;
@@ -25,6 +29,8 @@ ion-item {
 
 ion-button {
     width: 100%;
+    height: 100%;
+    margin: 0;
 }
 
 .card-content-collapse {
@@ -34,7 +40,11 @@ ion-button {
 .row-producto {
     border-bottom: 1px solid var(--dark-color);
     width: 100%;
-} 
+}
+
+.row-total {
+    padding-bottom: 15px;
+}
 
 .label-nombre {
     font-size: large;
@@ -129,9 +139,14 @@ ion-list {
 
 
 .label-total-pedido {
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-lg);
     display: block;
     text-align: center;
+}
+
+.btn-agregar-carrito {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 //Card de swiper
@@ -194,6 +209,28 @@ ion-list {
     padding: 15px;
 }
 
+.extras-grid-line-1 {
+    display: grid;
+    grid-template-rows: repeat(1, auto); 
+    grid-auto-flow: column; 
+    gap: 8px;
+    overflow-x: auto;
+    padding: 15px;
+}
+
+.input-costo {
+    background-color: var(--background-color);
+    border-radius: 10px;
+    --padding-start: 10px;
+    --padding-end: 10px;
+}
+
+.input-cantidad {
+    background-color: var(--background-color);
+    border-radius: 10px;
+    --padding-start: 10px;
+    
+}
 //Estilo al selecionar
 .selected {
     background-color: var(--secondary-color);

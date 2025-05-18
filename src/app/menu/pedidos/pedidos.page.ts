@@ -35,8 +35,6 @@ interface Detalles {
 
 export class PedidosPage implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
-
-  message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
   name!: string;
   tipoSeleccionado = '';
   saboresFiltrados: Producto[] = [];
@@ -44,6 +42,8 @@ export class PedidosPage implements OnInit {
   detalleSeleccionado = '';
   extrasFiltrados: Extras[] = [];
   extrasSeleccionados: string[] = [];
+  cantidadProducto = 1;
+  costoEnvio = 0;
   /**
    * 
    * Agregar costos de envio a domicilio
@@ -93,7 +93,26 @@ export class PedidosPage implements OnInit {
 
   ngOnInit() {
     console.log(this.detalleSeleccionado);
+  }
+
+  onControlesCantidad(funcion: string) {
+    if (funcion === 'sumar') {
+      this.cantidadProducto += 1;
+    } else {
+      if(this.cantidadProducto > 1){
+        this.cantidadProducto -= 1;
+      } 
+    }
+  }
+
+  onActualizarCostoEnvio(event: any) {
+    const nuevoValor = parseFloat(event.target.value);
     
+    if (!isNaN(nuevoValor)) {
+      this.costoEnvio = nuevoValor;
+    } else {
+      this.costoEnvio = 0; // Valor por defecto si no es un número
+    }
   }
 
   onCancelar() {
@@ -102,6 +121,11 @@ export class PedidosPage implements OnInit {
 
   onGuardar() {
     this.modal.dismiss(this.name, 'guardar');
+  }
+
+  onEditarProducto() {
+    console.log('Que onda');
+    
   }
 
   onWillDismiss(event: CustomEvent<OverlayEventDetail>) {
