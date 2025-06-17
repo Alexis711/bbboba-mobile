@@ -44,14 +44,6 @@ export class PedidosPage implements OnInit {
   extrasSeleccionados: string[] = [];
   cantidadProducto = 1;
   costoEnvio = 0;
-  /**
-   * 
-   * Agregar costos de envio a domicilio
-   * 
-   * 15
-   * 20
-   * 30
-   */
   tipos: TipoProducto[] = [
     { nombre: 'Cafe', icono: 'cafe' },
     { nombre: 'Malteada', icono: 'ice-cream' },
@@ -115,12 +107,17 @@ export class PedidosPage implements OnInit {
     }
   }
 
-  onCancelar() {
-    this.modal.dismiss(null, 'cancelar');
+  cerrarModal(modal: IonModal, datos?: any, rol: 'cancel' | 'confirm' = 'cancel') {
+    modal.dismiss(datos, rol);
   }
 
-  onGuardar() {
-    this.modal.dismiss(this.name, 'guardar');
+  onCancelar(modal: IonModal) {
+    this.cerrarModal(modal);
+  }
+
+  onGuardar(modal: IonModal) {
+    const datos = { /* Tus datos aquí */ };
+    this.cerrarModal(modal, datos, 'confirm');
   }
 
   onEditarProducto() {
