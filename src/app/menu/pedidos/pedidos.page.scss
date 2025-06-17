@@ -100,6 +100,9 @@ ion-button {
 
 .btn-editar {
     --background: var(--warning-color);
+        --padding-end: 0;
+    --padding-start: 0;
+    font-size: 20px;
 }
 
 .btn-completar {
