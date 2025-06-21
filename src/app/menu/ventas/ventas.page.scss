@@ -1,0 +1,32 @@
+ion-card {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    border-radius: 15px;
+    height: 10rem;
+
+    ion-card-content {
+        display: flex;
+        align-items: center;
+    }
+}
+
+
+ion-card.card-primary {
+    color: var(--ion-color-white);
+    background: var(--ion-color-primary);
+}
+
+ion-card.card-secondary {
+    color: var(--ion-color-dark);
+    background: var(--ion-color-secondary);
+}
+
+.icon-card {
+    font-size: xx-large;
+}
+
+.label-card {
+    font-size: x-large;
+    font-weight: 500;
+}
