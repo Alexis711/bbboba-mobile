@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ventas',
@@ -7,9 +8,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VentasPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {
   }
 
+  onIngresarGraficas() {
+    this.router.navigate(['graficas']);
+  }
+
+  onIngresarProductos() {
+    this.router.navigate(['productos']);
+  }
+
+  onIngresarVentas() {
+    this.router.navigate(['ventas']);
+  }
+  
+  onIngresarUsuarios() {
+    this.router.navigate(['usuarios']);
+  }
+
+  onIngresarCondiciones() {
+    this.router.navigate(['condiciones']);
+  }
 }
