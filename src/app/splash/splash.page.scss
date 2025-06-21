@@ -1,3 +1,9 @@
+ion-grid {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
 ion-row {
     justify-content: center;
 }
@@ -5,6 +11,8 @@ ion-row {
 ion-label {
     font-size: 2rem;
     font-weight: 700;
+    width: 100%;
+    text-align: center;
 }
 
 ion-avatar {
@@ -12,26 +20,38 @@ ion-avatar {
     height: 10rem;
 }
 
-.label-inferior {
-    font-size: x-small;
-    text-align: left;
+ion-spinner {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.label-version {
+    font-size: small;
+    text-align: center;
+}
+
+.label-empresa {
+    font-size: medium;
 }
 
 .row-avatar {
-    padding-top: 12rem;
+    padding-top: 11rem;
+    padding-bottom: 1rem;
 }
 
 .row-spinner {
     padding-top: 4rem;
     padding-bottom: 4rem;
+    font-size: large;
 }
 
 .row-version {
-    padding-top: 9rem;
-    padding-bottom: 1rem;
+    margin-top: auto;
+    padding-bottom: 2rem;
+    display: flex;
+    text-align: center;
+    height: 40%;
+    align-items: flex-end;
+    flex-direction: column;
+    gap: 0.25rem;
 }
-
-.col-version {
-    text-align: end;
-}
-
