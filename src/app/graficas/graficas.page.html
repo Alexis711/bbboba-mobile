@@ -1,11 +1,21 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Graficas</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="menu/ventas"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Graficas (21-JUN-2025)</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
   <ion-row>
-    <ion-col sizeXs="12" class="opciones-grafica">
+    <ion-col sizeXs="12" sizeMd="8">
+    </ion-col>
+    <ion-col sizeXs="12" sizeMd="4">
+      <canvas id="graficaVentas"></canvas>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col sizeXs="6" sizeMd="3">
       <ion-item>
         <ion-select label="Producto" label-placement="floating">
           <ion-select-option value="frappe">frappe</ion-select-option>
@@ -13,6 +23,8 @@
           <ion-select-option value="desayuno">desayuno</ion-select-option>
         </ion-select>
       </ion-item>
+    </ion-col>
+    <ion-col sizeXs="6" sizeMd="3">
       <ion-item>
         <ion-select label="Fecha" label-placement="floating">
           <ion-select-option value="Hoy">Hoy</ion-select-option>
@@ -21,12 +33,84 @@
         </ion-select>
       </ion-item>
     </ion-col>
-    <ion-col sizeXs="12">
-      <canvas id="graficaVentas"></canvas>
-    </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col size="6">
+    <ion-col sizeXs="6" sizeMd="2">
+      <ion-card>
+        <ion-row>
+          <ion-col size="12">
+            <ion-card-content>
+              <ion-row>
+                <ion-label class="label-producto">
+                  Taro
+                </ion-label>
+              </ion-row>
+              <ion-row>
+                <ion-label class="label-porcentaje">
+                  100%
+                </ion-label>
+              </ion-row>
+              <ion-row>
+                <ion-label class="label-cantidad">
+                  25
+                </ion-label>
+              </ion-row>
+            </ion-card-content>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </ion-col>
+    <ion-col sizeXs="6" sizeMd="2">
+      <ion-card>
+        <ion-row>
+          <ion-col size="12">
+            <ion-card-content>
+              <ion-row>
+                <ion-label class="label-producto">
+                  Taro
+                </ion-label>
+              </ion-row>
+              <ion-row>
+                <ion-label class="label-porcentaje">
+                  100%
+                </ion-label>
+              </ion-row>
+              <ion-row>
+                <ion-label class="label-cantidad">
+                  25
+                </ion-label>
+              </ion-row>
+            </ion-card-content>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </ion-col>
+    <ion-col sizeXs="6" sizeMd="2">
+      <ion-card>
+        <ion-row>
+          <ion-col size="12">
+            <ion-card-content>
+              <ion-row>
+                <ion-label class="label-producto">
+                  Taro
+                </ion-label>
+              </ion-row>
+              <ion-row>
+                <ion-label class="label-porcentaje">
+                  100%
+                </ion-label>
+              </ion-row>
+              <ion-row>
+                <ion-label class="label-cantidad">
+                  25
+                </ion-label>
+              </ion-row>
+            </ion-card-content>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </ion-col>
+    <ion-col sizeXs="6" sizeMd="2">
       <ion-card>
         <ion-row>
           <ion-col size="12">
