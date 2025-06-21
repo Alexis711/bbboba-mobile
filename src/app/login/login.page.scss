@@ -1,3 +1,13 @@
+ion-row {
+    text-align: center;
+    justify-content: center;
+}
+
+ion-avatar {
+    width: 6rem;
+    height: 6rem;
+}
+
 ion-label {
     font-size: large;
     padding-top: 1rem;
@@ -6,11 +16,14 @@ ion-label {
 }
 
 ion-input {
-    background: var(--white-color);
-    padding-left: 5px !important;
-    padding-right: 5px !important;
+    font-size: large;
+}
+
+ion-item {
+    width: 100%;
     margin-bottom: 1rem;
     border-radius: 10px;
+    --background: var(--ion-color-white);
 }
 
 ion-button {
@@ -23,23 +36,48 @@ ion-button {
     --color: var(--white-color);
 }
 
-.btn-iniciar {
-    --background: var(--white-color);
-    --color: var(--dark-color);
+ion-label {
+    width: 100%;
 }
 
-.row-titulo {
-    text-align: center;
-    justify-content: center;
+ion-card {
+    border-radius: 15px;
+    min-height: 60vh;
+    max-height: 65vh;
+    height: auto;
+    width: 100%;
+
+    ion-card-content {
+        height: 100%;
+    }
+}
+
+.div-buttons {
+    display: flex;
+    margin-top: 7rem;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .label-titulo {
     font-size: x-large;
     font-weight: 700;
-    padding-top: 4rem;
+    color: var(--ion-color-dark);
+    margin-bottom: 2rem;
 }
 
-.row-contenido {
+.label-input-datos {
+    color: var(--ion-color-dark);
+    text-align: left;
+    padding: 0 0 5px 0;
+}
+
+.row-avatar {
     padding-top: 4rem;
-    padding-bottom: 2.5rem;
+    padding-bottom: 1rem;
+}
+
+.btn-iniciar {
+    --background: var(--ion-color-white);
+    --color: var(--ion-color-dark);
 }

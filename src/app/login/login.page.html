@@ -1,28 +1,46 @@
 <ion-content [fullscreen]="true">
-  <ion-grid>
-    <ion-row class="row-titulo">
-      <ion-label class="label-titulo">Iniciar sesión</ion-label>
-    </ion-row>
-    <ion-row class="row-titulo">
-      <ion-avatar>
-        <img src="../../../assets/icon/babyboba.jpg"/>
-      </ion-avatar>
-    </ion-row>
-    <ion-row class="row-contenido">
-      <ion-label>Ingresa tu nombre de usuario o correo:</ion-label>
-      <ion-input type="email" placeholder="example@gmail.com"><ion-icon slot="start" name="mail"/></ion-input>
-      <ion-label>Ingresa tu contraseña:</ion-label>
-      <ion-input type="password" placeholder="password"><ion-icon slot="start" name="key"/></ion-input>
-    </ion-row>
-    <ion-row>
-      <ion-row>
-        <ion-button>
-          Entrar como invitado
-        </ion-button>
-      </ion-row>
-      <ion-button class="btn-iniciar">
-        Iniciar sesion
-      </ion-button>
-    </ion-row>
-  </ion-grid>
+  <ion-row class="row-avatar">
+    <ion-avatar>
+      <img src="../../assets/icon/babyboba.jpg" />
+    </ion-avatar>
+  </ion-row>
+  <ion-row>
+    <ion-card>
+      <ion-card-content>
+        <ion-row>
+          <ion-label class="label-titulo">Iniciar sesión</ion-label>
+        </ion-row>
+        <ion-row>
+          <ion-label class="label-input-datos">
+            Ingresa tu nombre de usuario o correo:
+          </ion-label>
+        </ion-row>
+        <ion-row>
+          <ion-item lines="none">
+            <ion-icon slot="start" name="mail"></ion-icon>
+            <ion-input type="email" placeholder="ejemplo@gmail.com"></ion-input>
+          </ion-item>
+        </ion-row>
+        <ion-row>
+          <ion-label class="label-input-datos">
+            Ingresa tu contraseña:
+          </ion-label>
+        </ion-row>
+        <ion-row>
+          <ion-item lines="none">
+            <ion-icon slot="start" name="key"></ion-icon>
+            <ion-input type="password" placeholder="ejemplo@gmail.com"></ion-input>
+          </ion-item>
+        </ion-row>
+        <div class="div-buttons">
+          <ion-button (click)="onIniciarInvitado()">
+            Entrar como invitado
+          </ion-button>
+          <ion-button (click)="onIniciarSesion()" class="btn-iniciar">
+            Iniciar sesion
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-row>
 </ion-content>
