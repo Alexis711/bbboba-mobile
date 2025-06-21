@@ -23,10 +23,26 @@ const routes: Routes = [
     loadChildren: () => import('./graficas/graficas.module').then( m => m.GraficasPageModule),
   },
   {
+    path: 'productos',
+    loadChildren: () => import('./productos/productos.module').then( m => m.ProductosPageModule)
+  },
+  {
+    path: 'ventas',
+    loadChildren: () => import('./ventas/ventas.module').then( m => m.VentasPageModule)
+  },
+  {
+    path: 'usuarios',
+    loadChildren: () => import('./usuarios/usuarios.module').then( m => m.UsuariosPageModule)
+  },
+  {
+    path: 'condiciones',
+    loadChildren: () => import('./condiciones/condiciones.module').then( m => m.CondicionesPageModule)
+  },
+  {
     path: '**',
     redirectTo: 'splash',
     pathMatch: 'full'
-  }
+  },
 ];
 @NgModule({
   imports: [
