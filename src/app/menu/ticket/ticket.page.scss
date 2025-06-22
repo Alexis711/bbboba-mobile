@@ -1,0 +1,112 @@
+ion-row {
+    width: 100%;
+}
+
+ion-card {
+    border-radius: 15px;
+    width: 100%;
+}
+
+ion-card-header {
+    height: 4rem;
+    padding: 0.5rem;
+    background: var(--medium-color);
+}
+
+ion-card-content {
+    height: auto;
+    padding: 0.5rem;
+    background: var(--background-color);
+}
+
+ion-item {
+    --background: transparent;
+}
+
+ion-button {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+ion-card.card-primary {
+    display: flex;
+    justify-content: start;
+    min-height: 3rem;
+    height: auto;
+    max-height: 5rem;
+    color: var(--ion-color-white);
+    background: var(--ion-color-primary);
+
+    ion-card-content {
+        width: 100%;
+        background: transparent;
+    }
+}
+
+.card-content-collapse {
+    display: none;
+}
+
+.row-producto {
+    border-bottom: 1px solid var(--dark-color);
+    width: 100%;
+}
+
+.label-nombre {
+    font-size: large;
+    color: white;
+    font-weight: 600;
+}
+
+.label-nombre-producto {
+    color: black;
+    font-weight: 600;
+    font-size: large;
+}
+
+.label-subnombre-producto {
+    color: var(--dark-color);
+    font-size: small;
+}
+
+.label-titulo-producto {
+    color: var(--text-inverso-color);
+    font-weight: 500;
+}
+
+.label-cantidad-producto, 
+.label-precio-producto {
+    font-size: medium;
+    font-weight: 600;
+}
+
+.col-content-right {
+    justify-content: end;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+.label-total {
+    display: block;
+    color: var(--text-inverso-color);
+    font-weight: 600;
+    text-align: right;
+    font-size: large;
+}
+
+.icon-card {
+    font-size: x-large;
+    padding-right: 10px;
+}
+
+.label-card {
+    font-size: large;
+    font-weight: 500;
+}
+
+.label-card-cantidad {
+    font-weight: 600;
+    font-size: large;
+}
