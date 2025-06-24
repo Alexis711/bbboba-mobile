@@ -39,10 +39,15 @@ const routes: Routes = [
     loadChildren: () => import('./condiciones/condiciones.module').then( m => m.CondicionesPageModule)
   },
   {
+    path: 'movimientos',
+    loadChildren: () => import('./movimientos/movimientos.module').then( m => m.MovimientosPageModule)
+  },
+  {
     path: '**',
     redirectTo: 'splash',
     pathMatch: 'full'
   },
+
 ];
 @NgModule({
   imports: [
