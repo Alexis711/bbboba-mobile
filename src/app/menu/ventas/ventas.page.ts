@@ -34,4 +34,8 @@ export class VentasPage implements OnInit {
   onIngresarCondiciones() {
     this.router.navigate(['condiciones']);
   }
+
+  onIngresarMovimientos() {
+    this.router.navigate(['movimientos']);
+  }
 }
