@@ -1,13 +1,148 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>ventas</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="menu/ventas"></ion-back-button>  
+    </ion-buttons>
+    <ion-title>Ventas</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">ventas</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-row>
+    <ion-card>
+      <ion-card-content>
+        <ion-row>
+          <ion-col sizeXs="12" sizeMd="4">
+            <div class="row-search-container">
+              <ion-input [(ngModel)]="searchTerm" placeholder="Buscar..." class="input-search"/>
+              <ion-button class="btn-search-inside" type="button" (click)="onSearch()">
+                <ion-icon name="search"></ion-icon>
+              </ion-button>
+            </div>
+          </ion-col>
+          <ion-col sizeXs="6" sizeMd="2">
+            <div class="btn-exportar div-btn">
+              <ion-select 
+                placeholder="Fecha"
+                interface="popover">
+                <ion-select-option value="Hoy">Hoy</ion-select-option>
+                <ion-select-option value="Semana">Semana</ion-select-option>
+                <ion-select-option value="Mes">Mes</ion-select-option>
+              </ion-select>
+            </div>
+          </ion-col>
+          <ion-col sizeXs="6" sizeMd="2">
+            <ion-button class="btn-exportar">
+              <ion-icon slot="end" name="document-text" />
+              <span>
+                Exportar Excel
+              </span>
+            </ion-button>
+          </ion-col>
+          <ion-col sizeXs="6" sizeMd="2">
+            <div class="grupo-derecho">
+              <ion-button class="btn-mostrar" (click)="abrirPopoverLimite($event)">
+                <span>Mostrar: {{ itemsPerPage }}</span>
+                <ion-icon slot="end" name="caret-down"></ion-icon>
+              </ion-button>
+              <ion-popover #popoverLimite [isOpen]="isPopoverLimiteAbierto" [event]="eventoPopoverLimite"
+                [dismissOnSelect]="false" (didDismiss)="isPopoverLimiteAbierto = false">
+                <ng-template>
+                  <ion-list>
+                    <ion-item (click)="setItemsPerPage(10); popoverLimite.dismiss()">
+                      <ion-label>10</ion-label>
+                    </ion-item>
+                    <ion-item (click)="setItemsPerPage(25); popoverLimite.dismiss()">
+                      <ion-label>25</ion-label>
+                    </ion-item>
+                    <ion-item (click)="setItemsPerPage(50); popoverLimite.dismiss()">
+                      <ion-label>50</ion-label>
+                    </ion-item>
+                    <ion-item (click)="setItemsPerPage(100); popoverLimite.dismiss()">
+                      <ion-label>100</ion-label>
+                    </ion-item>
+                  </ion-list>
+                </ng-template>
+              </ion-popover>
+            </div>
+          </ion-col>
+        </ion-row>
+        <div class="div-tabla">
+          <table id="tablaVentas" class="display">
+            <thead>
+              <tr>
+                <th style="width: 4rem;">Folio</th>
+                <th style="width: 5rem;">Fecha</th>
+                <th style="width: 5rem;">Tipo</th>
+                <th style="width: 4rem;">Envio</th>
+                <th style="width: 10rem;">Vendedor</th>
+                <th style="width: 5rem;">Total</th>
+                <th style="width: 10rem;">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of data">
+                <td>
+                  {{ item.folio }}
+                </td>
+                <td>
+                  {{ item.fecha }}
+                </td>
+                <td>
+                  {{ item.tipo }}
+                </td>
+                <td>
+                  $ {{ item.envio }}
+                </td>
+                <td>
+                  {{ item.nombreUsuario }}
+                </td>
+                <td>
+                  $ {{ item.precio }}
+                </td>
+                <td>
+                  <ion-button class="btn-ver">
+                    <ion-icon name="eye" />
+                  </ion-button>
+                  <ion-button class="btn-editar">
+                    <ion-icon name="pencil" />
+                  </ion-button>
+                  <ion-button class="btn-eliminar">
+                    <ion-icon name="trash" />
+                  </ion-button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <ion-row class="paginacion-wrapper ion-justify-content-center ion-align-items-center">
+          <!-- Botón página anterior -->
+          <ion-col size="auto">
+            <ion-button fill="clear" class="nav-btn" (click)="cambiarPagina(-1)"
+              [disabled]="currentPage === 1 || isLoading">
+              <ion-icon name="chevron-back-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+
+          <!-- Página actual -->
+          <ion-col size="auto">
+            <ion-input type="number" [(ngModel)]="currentPage" (ionChange)="onInputChange()" min="1" class="page-input"
+              [disabled]="isLoading">
+            </ion-input>
+          </ion-col>
+
+          <!-- Botón página siguiente -->
+          <ion-col size="auto">
+            <ion-button fill="clear" class="nav-btn" (click)="cambiarPagina(1)" [disabled]="isLoading">
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+
+          <!-- Texto total -->
+          <ion-col sizeXs="12" sizeMd="12" class="total-info">
+            Página {{ itemsPerPage }} • Total: {{ totalRegistros }} registros
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ion-row>
 </ion-content>
