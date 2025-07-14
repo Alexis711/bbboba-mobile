@@ -38,4 +38,8 @@ export class VentasPage implements OnInit {
   onIngresarMovimientos() {
     this.router.navigate(['movimientos']);
   }
+
+  onIngresarExtras() {
+    this.router.navigate(['extras']);
+  }
 }
