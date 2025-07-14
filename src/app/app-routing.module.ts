@@ -43,10 +43,15 @@ const routes: Routes = [
     loadChildren: () => import('./movimientos/movimientos.module').then( m => m.MovimientosPageModule)
   },
   {
+    path: 'extras',
+    loadChildren: () => import('./extras/extras.module').then( m => m.ExtrasPageModule)
+  },
+  {
     path: '**',
     redirectTo: 'splash',
     pathMatch: 'full'
   },
+
 
 ];
 @NgModule({
