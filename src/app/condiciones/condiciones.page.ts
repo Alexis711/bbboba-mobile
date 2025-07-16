@@ -36,7 +36,8 @@ export class CondicionesPage implements OnInit {
 
   ngOnInit() {
   }
-ngAfterViewInit() {
+  
+  ngAfterViewInit() {
     setTimeout(() => {
       this.onTablaUsuarios();
     }, 0);
