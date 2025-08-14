@@ -20,7 +20,7 @@
             </div>
           </ion-col>
             <ion-col sizeXs="6" sizeMd="2">
-              <ion-button class="btn-exportar">
+              <ion-button class="btn-exportar" (click)="exportToExcel()">
                 <ion-icon slot="end" name="document-text" />
                 <span>
                   Exportar Excel
@@ -55,56 +55,22 @@
               </div>
             </ion-col>
         </ion-row>
-        <div class="div-tabla">
-          <table id="tablaUsuarios" class="display">
-            <thead>
-              <tr>
-                <th style="width: 7rem;">Usuario</th>
-                <th style="width: 10rem;">Nombre(s)</th>
-                <th style="width: 10rem;">Apellidos</th>
-                <th style="width: 12rem;">Correo</th>
-                <th style="width: 5rem;">Telefono</th>
-                <th style="width: 6rem;">Rol</th>
-                <th style="width: 10rem;">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of data">
-                <td>
-                  {{ item.nombreUsuario }}
-                </td>
-                <td>
-                  {{ item.nombres }}
-                </td>
-                <td>
-                  {{ item.apellidos }}
-                </td>
-                <td>
-                  {{ item.correo }}
-                </td>
-                <td>
-                  {{ item.telefono }}
-                </td>
-                <td>
-                  {{ item.rol }}
-                </td>
-                <td>
-                  <ion-button class="btn-ver">
-                    <ion-icon name="eye" />
-                  </ion-button>
-                  <ion-button class="btn-editar">
-                    <ion-icon name="pencil" />
-                  </ion-button>
-                  <ion-button class="btn-eliminar">
-                    <ion-icon name="trash" />
-                  </ion-button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div *ngIf="isLoading; else tablaUsuarios" class="no-data">
+          <ion-row>
+            <ion-spinner name="circular" />
+          </ion-row>
         </div>
+        <ng-template #tablaUsuarios>
+          <app-tablas
+            #tablaUsuarios
+            [data]="data"
+            [columnas]="columnas"
+            [showButtons]="true"
+            (exportExcel)="onExportExcel($event)"
+            (exportPDF)="onExportPDF($event)">
+          </app-tablas>
+        </ng-template>
         <ion-row class="paginacion-wrapper ion-justify-content-center ion-align-items-center">
-          <!-- Botón página anterior -->
           <ion-col size="auto">
             <ion-button fill="clear" class="nav-btn" (click)="cambiarPagina(-1)"
               [disabled]="currentPage === 1 || isLoading">
@@ -112,14 +78,12 @@
             </ion-button>
           </ion-col>
 
-          <!-- Página actual -->
           <ion-col size="auto">
             <ion-input type="number" [(ngModel)]="currentPage" (ionChange)="onInputChange()" min="1" class="page-input"
               [disabled]="isLoading">
             </ion-input>
           </ion-col>
 
-          <!-- Botón página siguiente -->
           <ion-col size="auto">
             <ion-button fill="clear" class="nav-btn" (click)="cambiarPagina(1)" [disabled]="isLoading">
               <ion-icon name="chevron-forward-outline"></ion-icon>

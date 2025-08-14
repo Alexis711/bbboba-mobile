@@ -8,4 +8,8 @@ export class Usuarios {
     usu_clave!: string;
     usu_estatus!: number;
     usu_rol!: number;
+
+    constructor(init?: Partial<Usuarios>) {
+        Object.assign(this, init);
+    }
 }

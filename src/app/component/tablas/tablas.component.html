@@ -1,0 +1,31 @@
+<div class="tabla-usuarios-container">
+  <table #tablaGeneral>
+    <thead>
+      <tr>
+        <ng-container *ngFor="let col of columnas">
+          <th *ngIf="col.display !== 'none'" [ngStyle]="{ width: col.width, 'min-width': col.width }">
+            {{ col.header }}
+          </th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of data">
+        <ng-container *ngFor="let col of columnas">
+          <td *ngIf="col.display !== 'none'" [ngStyle]="{ width: col.width, 'min-width': col.width }">
+            <ng-container *ngIf="!col.showButton">
+              {{ row[col.field || ''] }}
+            </ng-container>
+            <ng-container *ngIf="col.showButton && isAdmin">
+              <ion-button *ngFor="let btn of col.showButtons" size="small"
+                (click)="btn.clickButton ? btn.clickButton(row) : null"
+                [ngStyle]="{'--background': btn.background, '--color': btn.color || 'var(--light-neutral)'}">
+                <ion-icon [name]="btn.iconName"></ion-icon>
+              </ion-button>
+            </ng-container>
+          </td>
+        </ng-container>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,5 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import DataTable from 'datatables.net-dt';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { UsuariosService } from '../services/usuarios.service';
+import { Usuarios } from '../models/usuarios.model';
+import { TablasComponent } from '../component/tablas/tablas.component';
 
 @Component({
   selector: 'app-usuarios',
@@ -7,25 +9,60 @@ import DataTable from 'datatables.net-dt';
   styleUrls: ['./usuarios.page.scss'],
 })
 export class UsuariosPage implements OnInit {
-  @ViewChild('tablaUsuarios', { static: false }) tablaDatos!: ElementRef
-  data = [
+  @ViewChild('tablaUsuarios', { static: false }) tablaDatos!: TablasComponent
+  data: Usuarios[] = [];
+  columnas = [
+    { header: 'Lote', field: 'lote', width: '5rem' },
+    { header: 'Folio', field: 'folio', width: '5rem' },
+    { header: 'Número', field: 'numero', width: '8rem' },
+    { header: 'Monto', field: 'monto', width: '8rem' },
+    { header: 'Compañía', field: 'compania', width: '9rem' },
+    { header: 'Folio Recarga', field: 'folioRecarga', width: '9rem' },
+    { header: 'Fecha Recarga', field: 'fechaRecarga', direccion: 'desc', width: '9rem' },
+    { header: 'Plataforma', field: 'plataforma', width: '6rem' },
+    { header: 'Usuario', field:'usuario', width: '9rem' },
     {
-      nombreUsuario: 'Alexemv711',
-      nombres: 'Alexis Eduardo',
-      apellidos: 'Mendez Valencia',
-      correo: 'Alexismeva0011@gmail.com',
-      telefono: '3411061114',
-      rol: 'Superadmin',
+      header: 'Localización', field: 'localizacion', width: '6rem', showButton: true,
+      showButtons: [
+        {
+          iconName: 'location',
+          background: 'var(--light-neutral)',
+          color: 'var(--danger-color)',
+          clickButton: (item: any) => this.onVerUsuario(item),
+          isAdmin: 'auth/recharge',
+        },
+      ],
     },
-    {
-      nombreUsuario: 'AimeeArr',
-      nombres: 'Aimme',
-      apellidos: 'Arriaga',
-      correo: 'aimee_arr@example.com',
-      telefono: '3411021390',
-      rol: 'Admin',
-    }
   ];
+  /*columnas = [
+    { header: 'Usuario', field: 'usu_nom_usu', width: '7rem' },
+    { header: 'Nombre(s)', field: 'usu_nombres', width: '10rem' },
+    { header: 'Apellidos', field: 'usu_apellidos', width: '10rem' },
+    { header: 'Correo', field: 'usu_correo', width: '12rem' },
+    { header: 'Teléfono', field: 'usu_telefono', width: '5rem' },
+    { header: 'Rol', field: 'usu_rol', width: '6rem' },
+    {
+      header: 'Acciones',
+      width: '10rem',
+      showButtons: [
+        {
+          iconName: 'eye',
+          background: 'var(--light-neutral)',
+          color: 'var(--primary-color)'
+        },
+        {
+          iconName: 'pencil',
+          background: 'var(--light-neutral)',
+          color: 'var(--warning-color)'
+        },
+        {
+          iconName: 'trash',
+          background: 'var(--light-neutral)',
+          color: 'var(--danger-color)'
+        }
+      ]
+    }
+  ];*/
 
   isLoading: boolean = false;
   searchTerm: string = '';
@@ -36,60 +73,29 @@ export class UsuariosPage implements OnInit {
   isPopoverLimiteAbierto = false;
   eventoPopoverLimite: Event | null = null;
 
-  constructor() { }
+  constructor(
+    private usuarioServ: UsuariosService
+  ) { }
 
   ngOnInit() {
-  }
-  
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.onTablaUsuarios();
-    }, 0);
+    this.onListUser();
   }
 
-  private onTablaUsuarios() {
-    new DataTable('#tablaUsuarios', {
-      paging: false,
-      searching: false,
-      info: false,
-      autoWidth: false,
-      language: {
-        'emptyTable': 'No hay información',
-        'info': 'Mostrando _START_ a _END_ de _TOTAL_ Entradas',
-        'lengthMenu': 'Mostrar _MENU_ Entradas',
-        'loadingRecords': 'Cargando...',
-        'processing': 'Procesando...',
-        'zeroRecords': 'Sin registros encontrados',
+  onListUser() {
+    const payload = { limit: this.itemsPerPage.toString(), page: this.currentPage.toString() };
+    this.usuarioServ.getUsers(payload).subscribe({
+      next: (resp: any) => {
+        if (resp.status) {
+          this.data = resp.response;
+          this.totalRegistros = resp.total || this.data.length;
+        } else {
+          this.data = [];
+        }
       },
+      error: () => {
+        this.data = [];
+      }
     });
-  }
-
-  onSearch() {
-    setTimeout(() => {
-      //onListDatos
-    }, 1500)
-  }
-
-  setItemsPerPage(value: number) {
-    this.itemsPerPage = value;
-    this.showSelector = false;
-    //this.onListAsignaciones('', '');
-  }
-
-  cambiarPagina(incremento: number) {
-    const nuevaPagina = this.currentPage + incremento;
-    if (nuevaPagina < 1) return;
-
-    this.irAPagina(nuevaPagina);
-  }
-
-  irAPagina(pagina: number) {
-    this.currentPage = pagina;
-    //this.onListAsignaciones('', '');
-  }
-
-  onInputChange() {
-    this.irAPagina(this.currentPage);
   }
 
   abrirPopoverLimite(ev: Event) {
@@ -97,4 +103,57 @@ export class UsuariosPage implements OnInit {
     this.isPopoverLimiteAbierto = true;
   }
 
+  cambiarPagina(incremento: number) {
+    const nuevaPagina = this.currentPage + incremento;
+    if (nuevaPagina < 1) return;
+    this.currentPage = nuevaPagina;
+    this.onListUser();
+  }
+
+  irAPagina(pagina: number) {
+    if (pagina < 1) return;
+    this.currentPage = pagina;
+    this.onListUser();
+  }
+
+  onInputChange() {
+    this.irAPagina(this.currentPage);
+  }
+
+  setItemsPerPage(value: number) {
+    this.itemsPerPage = value;
+    this.onListUser();
+  }
+
+  onSearch() {
+    this.onListUser();
+  }
+
+  exportToExcel() {
+    this.tablaDatos.exportToExcel();
+  }
+
+  exportToPDF() {
+    this.tablaDatos.exportToPDF();
+  }
+
+  onExportExcel(data: any[]) {
+    console.log('Excel exportado:', data);
+  }
+
+  onExportPDF(data: any[]) {
+    console.log('PDF exportado:', data);
+  }
+
+  onVerUsuario(item: any) {
+
+  }
+
+  onEditarUsuario(item: any) {
+
+  }
+
+  onEliminarUsuario(item: any) {
+
+  }
 }
