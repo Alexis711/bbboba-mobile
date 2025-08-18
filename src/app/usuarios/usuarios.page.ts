@@ -12,30 +12,8 @@ export class UsuariosPage implements OnInit {
   @ViewChild('tablaUsuarios', { static: false }) tablaDatos!: TablasComponent
   data: Usuarios[] = [];
   columnas = [
-    { header: 'Lote', field: 'lote', width: '5rem' },
-    { header: 'Folio', field: 'folio', width: '5rem' },
-    { header: 'Número', field: 'numero', width: '8rem' },
-    { header: 'Monto', field: 'monto', width: '8rem' },
-    { header: 'Compañía', field: 'compania', width: '9rem' },
-    { header: 'Folio Recarga', field: 'folioRecarga', width: '9rem' },
-    { header: 'Fecha Recarga', field: 'fechaRecarga', direccion: 'desc', width: '9rem' },
-    { header: 'Plataforma', field: 'plataforma', width: '6rem' },
-    { header: 'Usuario', field:'usuario', width: '9rem' },
-    {
-      header: 'Localización', field: 'localizacion', width: '6rem', showButton: true,
-      showButtons: [
-        {
-          iconName: 'location',
-          background: 'var(--light-neutral)',
-          color: 'var(--danger-color)',
-          clickButton: (item: any) => this.onVerUsuario(item),
-          isAdmin: 'auth/recharge',
-        },
-      ],
-    },
-  ];
-  /*columnas = [
-    { header: 'Usuario', field: 'usu_nom_usu', width: '7rem' },
+    { header: 'Id', field: 'usu_id', width: '7rem' },
+    { header: 'Usuario', field: 'usu_nom_usu',  direccion: 'desc', width: '7rem' },
     { header: 'Nombre(s)', field: 'usu_nombres', width: '10rem' },
     { header: 'Apellidos', field: 'usu_apellidos', width: '10rem' },
     { header: 'Correo', field: 'usu_correo', width: '12rem' },
@@ -43,26 +21,32 @@ export class UsuariosPage implements OnInit {
     { header: 'Rol', field: 'usu_rol', width: '6rem' },
     {
       header: 'Acciones',
+      field: 'acciones',
       width: '10rem',
+      showButton: true,
       showButtons: [
         {
           iconName: 'eye',
           background: 'var(--light-neutral)',
-          color: 'var(--primary-color)'
+          color: 'var(--primary-color)',
+          clickButton: (item: any) => this.onVerUsuario(item),
+          isAdmin: true,
         },
         {
           iconName: 'pencil',
           background: 'var(--light-neutral)',
-          color: 'var(--warning-color)'
+          color: 'var(--warning-color)',
+          clickButton: (item: any) => this.onVerUsuario(item),
         },
         {
           iconName: 'trash',
           background: 'var(--light-neutral)',
-          color: 'var(--danger-color)'
+          color: 'var(--danger-color)',
+          clickButton: (item: any) => this.onVerUsuario(item),
         }
       ]
     }
-  ];*/
+  ];
 
   isLoading: boolean = false;
   searchTerm: string = '';
@@ -87,14 +71,14 @@ export class UsuariosPage implements OnInit {
       next: (resp: any) => {
         if (resp.status) {
           this.data = resp.response;
-          this.totalRegistros = resp.total || this.data.length;
-        } else {
-          this.data = [];
         }
       },
-      error: () => {
+      error: (err: any) => {
         this.data = [];
-      }
+        console.log('Error',err);
+        
+      },
+      
     });
   }
 

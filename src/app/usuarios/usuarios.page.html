@@ -63,9 +63,8 @@
         <ng-template #tablaUsuarios>
           <app-tablas
             #tablaUsuarios
-            [data]="data"
             [columnas]="columnas"
-            [showButtons]="true"
+            [data]="data"
             (exportExcel)="onExportExcel($event)"
             (exportPDF)="onExportPDF($event)">
           </app-tablas>
