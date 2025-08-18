@@ -11,7 +11,7 @@ export interface ButtonConfig {
   background?: string;
   color?: string;
   clickButton?: (row: any) => void;
-  isAdmin: string;
+  isAdmin?: boolean;
 }
 
 export interface Column {
@@ -133,6 +133,8 @@ export class TablasComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   }
 
   private updateTable() {
+    console.log('UPDATE',this.data);
+    
     if (this.dataTable) {
       this.dataTable.clear();
       this.dataTable.rows.add(this.data);
@@ -156,7 +158,7 @@ export class TablasComponent implements OnInit, AfterViewInit, OnChanges, OnDest
           ? this.columnasVisibles.findIndex(col => col.field === columnaConOrden.field)
           : 0;
         const direccionOrden = columnaConOrden?.direccion || 'asc';
-        this.dataTable = new DataTable(this.tablaGeneral.nativeElement, {
+        this.dataTable = new DataTable(this.tablaGeneral.nativeElement, {          
           style: 'none',
           data: this.data,
           columns: this.columnasVisibles.map(col => ({
@@ -194,8 +196,11 @@ export class TablasComponent implements OnInit, AfterViewInit, OnChanges, OnDest
 
   private renderButtons(data: any, type: any, row: any, meta: any) {
     const columnConfig = this.columnasVisibles[meta.col];
+      console.log('BTN',columnConfig);
     if (!columnConfig.showButtons) return '';
     const buttonsWithPermission = columnConfig.showButtons.filter(button => {
+      console.log('BTN',button);
+      
       const hasPermission = button.isAdmin;
       if (!hasPermission) return false;
 
