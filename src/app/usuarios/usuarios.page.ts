@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import DataTable from 'datatables.net-dt';
+import { Usuarios } from '../models/usuarios.model';
+import { UsuariosService } from '../services/usuarios.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -8,24 +10,51 @@ import DataTable from 'datatables.net-dt';
 })
 export class UsuariosPage implements OnInit {
   @ViewChild('tablaUsuarios', { static: false }) tablaDatos!: ElementRef
-  data = [
+  data: Usuarios[] = [];
+
+  /*columnas = [
+    { header: 'Id', field: 'usu_id', width: '7rem' },
+    { header: 'Usuario', field: 'usu_nom_usu',  direccion: 'desc', width: '7rem' },
+    { header: 'Nombre(s)', field: 'usu_nombres', width: '10rem' },
+    { header: 'Apellidos', field: 'usu_apellidos', width: '10rem' },
+    { header: 'Estatus', field: 'usu_estatus', width: '6rem' },
+    { header: 'Correo', field: 'usu_correo', width: '12rem' },
+    { header: 'Teléfono', field: 'usu_telefono', width: '5rem' },
+    { header: 'Rol', field: 'usu_rol', width: '6rem' },
     {
-      nombreUsuario: 'Alexemv711',
-      nombres: 'Alexis Eduardo',
-      apellidos: 'Mendez Valencia',
-      correo: 'Alexismeva0011@gmail.com',
-      telefono: '3411061114',
-      rol: 'Superadmin',
-    },
-    {
-      nombreUsuario: 'AimeeArr',
-      nombres: 'Aimme',
-      apellidos: 'Arriaga',
-      correo: 'aimee_arr@example.com',
-      telefono: '3411021390',
-      rol: 'Admin',
+      header: 'Acciones',
+      field: 'acciones',
+      width: '10rem',
+      showButton: true,
+      showButtons: [
+        {
+          iconName: 'eye',
+          background: 'var(--light-neutral)',
+          color: 'var(--primary-color)',
+          clickButton: (item: any) => this.onVerUsuario(item),
+          access: 'auth/recharge',
+          accessType: 'write',
+          //isAdmin: true,
+        },
+        {
+          iconName: 'pencil',
+          background: 'var(--light-neutral)',
+          color: 'var(--warning-color)',
+          clickButton: (item: any) => this.onVerUsuario(item),
+          access: 'auth/recharge',
+          accessType: 'write',
+        },
+        {
+          iconName: 'trash',
+          background: 'var(--light-neutral)',
+          color: 'var(--danger-color)',
+          clickButton: (item: any) => this.onVerUsuario(item),
+          access: 'auth/recharge',
+          accessType: 'write',
+        }
+      ]
     }
-  ];
+  ];*/
 
   isLoading: boolean = false;
   searchTerm: string = '';
@@ -36,10 +65,35 @@ export class UsuariosPage implements OnInit {
   isPopoverLimiteAbierto = false;
   eventoPopoverLimite: Event | null = null;
 
-  constructor() { }
+  constructor(
+    private usuarioServ: UsuariosService
+  ) { }
 
   ngOnInit() {
+    this.onListUser();
   }
+
+  onListUser() {
+    const payload = { limit: this.itemsPerPage.toString(), page: this.currentPage.toString() };
+    this.usuarioServ.getUsers(payload).subscribe({
+      next: (resp: any) => {
+        console.log(resp);
+        
+        if (resp.status) {
+          this.data = resp.response;
+        }
+        console.log('DATA',this.data);
+        
+      },
+      error: (err: any) => {
+        this.data = [];
+        console.log('Error',err);
+        
+      },
+      
+    });
+  }
+
   
   ngAfterViewInit() {
     setTimeout(() => {
