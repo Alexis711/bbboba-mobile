@@ -16,6 +16,7 @@ export class UsuariosPage implements OnInit {
     { header: 'Usuario', field: 'usu_nom_usu',  direccion: 'desc', width: '7rem' },
     { header: 'Nombre(s)', field: 'usu_nombres', width: '10rem' },
     { header: 'Apellidos', field: 'usu_apellidos', width: '10rem' },
+    { header: 'Estatus', field: 'usu_estatus', width: '6rem' },
     { header: 'Correo', field: 'usu_correo', width: '12rem' },
     { header: 'Teléfono', field: 'usu_telefono', width: '5rem' },
     { header: 'Rol', field: 'usu_rol', width: '6rem' },
@@ -30,19 +31,25 @@ export class UsuariosPage implements OnInit {
           background: 'var(--light-neutral)',
           color: 'var(--primary-color)',
           clickButton: (item: any) => this.onVerUsuario(item),
-          isAdmin: true,
+          access: 'auth/recharge',
+          accessType: 'write',
+          //isAdmin: true,
         },
         {
           iconName: 'pencil',
           background: 'var(--light-neutral)',
           color: 'var(--warning-color)',
           clickButton: (item: any) => this.onVerUsuario(item),
+          access: 'auth/recharge',
+          accessType: 'write',
         },
         {
           iconName: 'trash',
           background: 'var(--light-neutral)',
           color: 'var(--danger-color)',
           clickButton: (item: any) => this.onVerUsuario(item),
+          access: 'auth/recharge',
+          accessType: 'write',
         }
       ]
     }
@@ -69,9 +76,13 @@ export class UsuariosPage implements OnInit {
     const payload = { limit: this.itemsPerPage.toString(), page: this.currentPage.toString() };
     this.usuarioServ.getUsers(payload).subscribe({
       next: (resp: any) => {
+        console.log(resp);
+        
         if (resp.status) {
           this.data = resp.response;
         }
+        console.log('DATA',this.data);
+        
       },
       error: (err: any) => {
         this.data = [];

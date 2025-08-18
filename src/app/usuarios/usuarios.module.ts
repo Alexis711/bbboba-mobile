@@ -11,8 +11,7 @@ import { TablasModule } from '../component/tablas/tablas.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    UsuariosPageRoutingModule,
-    TablasModule
+    UsuariosPageRoutingModule
   ],
   declarations: [UsuariosPage]
 })

@@ -1,44 +1,24 @@
-<div>
-  <table #tablaGeneral>
-    <thead>
-      <tr>
-        <ng-container *ngFor="let column of columnas">
-          <th *ngIf="column.display !== 'none'"
-          [ngStyle]="{ 
-            width: column.width, 
-            'min-width': column.width
-            }">
-            {{ column.header }}
-          </th>
-        </ng-container>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let row of data">
-        <ng-container *ngFor="let column of columnas">
-          <td *ngIf="column.display !== 'none'" [ngStyle]="{
-              width: column.width, 
-              'min-width': column.width
-            }">
-            <ng-container *ngIf="!column.showButton">
-              {{ row[column.field || '' ] }}
-            </ng-container>
-            <ng-container *ngIf="column.showButton">
-              <ng-container *ngFor="let button of column.showButtons">
-                <ion-button *ngIf="button.isAdmin"
-                  size="small"
-                  (click)="button.clickButton ? button.clickButton(row) : null"
-                  [ngStyle]="{ 
-                    '--background': button.background, 
-                    '--color': button.color || 'var(--light-neutral)'
-                    }">
-                  <ion-icon [name]="button.iconName"></ion-icon>
-                </ion-button>
-              </ng-container>
-            </ng-container>
-          </td>
-        </ng-container>
-      </tr>
-    </tbody>
-  </table>
+<div class="tabla-container">
+  <div class="export-buttons">
+    <ion-button size="small" (click)="exportToExcel()">Exportar Excel</ion-button>
+    <ion-button size="small" (click)="exportToPDF()">Exportar PDF</ion-button>
+  </div>
+  <ion-grid>
+    <ion-row class="tabla-header">
+      <ion-col *ngFor="let col of columnas"
+               [style.width]="col.width"
+               (click)="sortBy(col.field)">
+        <b>{{ col.header }}</b>
+        <ion-icon *ngIf="sortColumn === col.field"
+                  [name]="sortDirection === 'asc' ? 'chevron-up' : 'chevron-down'">
+        </ion-icon>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngFor="let row of data">
+      <ion-col *ngFor="let col of columnas" [style.width]="col.width">
+        {{ row[col.field] === 0 ? '0' : (row[col.field] || '') }}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </div>

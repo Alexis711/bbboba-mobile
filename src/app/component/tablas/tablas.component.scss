@@ -1,49 +1,19 @@
-div {
-    overflow: auto;
-    padding: 0;
-    padding-left: 1rem;
-    padding-right: 1rem;
+.tabla-container {
+  overflow-x: auto;
 }
 
-thead {
-    color: var(--ion-color-secondary);
-    border-bottom: 1px solid var(--ion-color-secondary);
-    text-align: center !important;
+.tabla-header {
+  background: var(--ion-color-light);
+  border-bottom: 2px solid var(--ion-color-medium);
+  cursor: pointer;
 }
 
-tbody {
-    background: var(--ion-color-white);
-    color: var(--ion-color-black);
+ion-row {
+  border-bottom: 1px solid var(--ion-color-medium);
 }
 
-th {
-    text-align: center !important;
-    padding: 5px !important;
-    padding-right: 5px;
-}
-
-table.dataTable tbody td {
-    text-align: center !important;
-    min-height: 1rem;
-    height: auto;
-    white-space: normal;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    padding: 5px !important;
-}
-
-ion-button {
-    margin-left: 1px;
-    margin-right: 1px;
-    margin-top: 1px;
-    margin-bottom: 1px;
-    color: var(--ion-color-white);
-}
-
-table.dataTable tbody tr:nth-child(odd) {
-    background-color: var(--ion-color-input);
-}
-
-table.dataTable tbody tr:hover {
-    background-color: var(--ion-color-medium);
+.export-buttons {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
 }
