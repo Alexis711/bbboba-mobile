@@ -6,12 +6,15 @@
     <ion-title>Usuarios</ion-title>
   </ion-toolbar>
 </ion-header>
+
 <ion-content [fullscreen]="true">
+
+  <!-- 🔎 Buscador y botones superiores -->
   <ion-row>
     <ion-card>
       <ion-card-content>
         <ion-row>
-          <ion-col sizeXs="12" sizeMd="8">
+          <ion-col size-xs="12" size-md="8">
             <div class="row-search-container">
               <ion-input [(ngModel)]="searchTerm" placeholder="Buscar..." class="input-search" />
               <ion-button class="btn-search-inside" type="button" (click)="onSearch()">
@@ -19,92 +22,82 @@
               </ion-button>
             </div>
           </ion-col>
-            <ion-col sizeXs="6" sizeMd="2">
-              <ion-button class="btn-exportar">
-                <ion-icon slot="end" name="document-text" />
-                <span>
-                  Exportar Excel
-                </span>
+
+          <ion-col size-xs="6" size-md="2">
+            <ion-button class="btn-exportar">
+              <ion-icon slot="end" name="document-text" />
+              <span>Exportar Excel</span>
+            </ion-button>
+          </ion-col>
+
+          <ion-col size-xs="6" size-md="2">
+            <div class="grupo-derecho">
+              <ion-button class="btn-mostrar" (click)="abrirPopoverLimite($event)">
+                <span>Mostrar: {{ itemsPerPage }}</span>
+                <ion-icon slot="end" name="caret-down"></ion-icon>
               </ion-button>
-            </ion-col>
-            <ion-col sizeXs="6" sizeMd="2">
-              <div class="grupo-derecho">
-                <ion-button class="btn-mostrar" (click)="abrirPopoverLimite($event)">
-                  <span>Mostrar: {{ itemsPerPage }}</span>
-                  <ion-icon slot="end" name="caret-down"></ion-icon>
-                </ion-button>
-                <ion-popover #popoverLimite [isOpen]="isPopoverLimiteAbierto" [event]="eventoPopoverLimite"
-                  [dismissOnSelect]="false" (didDismiss)="isPopoverLimiteAbierto = false">
-                  <ng-template>
-                    <ion-list>
-                      <ion-item (click)="setItemsPerPage(10); popoverLimite.dismiss()">
-                        <ion-label>10</ion-label>
-                      </ion-item>
-                      <ion-item (click)="setItemsPerPage(25); popoverLimite.dismiss()">
-                        <ion-label>25</ion-label>
-                      </ion-item>
-                      <ion-item (click)="setItemsPerPage(50); popoverLimite.dismiss()">
-                        <ion-label>50</ion-label>
-                      </ion-item>
-                      <ion-item (click)="setItemsPerPage(100); popoverLimite.dismiss()">
-                        <ion-label>100</ion-label>
-                      </ion-item>
-                    </ion-list>
-                  </ng-template>
-                </ion-popover>
-              </div>
-            </ion-col>
+              <ion-popover #popoverLimite [isOpen]="isPopoverLimiteAbierto" [event]="eventoPopoverLimite"
+                [dismissOnSelect]="false" (didDismiss)="isPopoverLimiteAbierto = false">
+                <ng-template>
+                  <ion-list>
+                    <ion-item (click)="setItemsPerPage(10); popoverLimite.dismiss()">
+                      <ion-label>10</ion-label>
+                    </ion-item>
+                    <ion-item (click)="setItemsPerPage(25); popoverLimite.dismiss()">
+                      <ion-label>25</ion-label>
+                    </ion-item>
+                    <ion-item (click)="setItemsPerPage(50); popoverLimite.dismiss()">
+                      <ion-label>50</ion-label>
+                    </ion-item>
+                    <ion-item (click)="setItemsPerPage(100); popoverLimite.dismiss()">
+                      <ion-label>100</ion-label>
+                    </ion-item>
+                  </ion-list>
+                </ng-template>
+              </ion-popover>
+            </div>
+          </ion-col>
         </ion-row>
+
         <div class="div-tabla">
-          <table id="tablaUsuarios" class="display">
-            <thead>
-              <tr>
-                <th style="width: 7rem;">Usuario</th>
-                <th style="width: 10rem;">Nombre(s)</th>
-                <th style="width: 10rem;">Apellidos</th>
-                <th style="width: 12rem;">Correo</th>
-                <th style="width: 5rem;">Telefono</th>
-                <th style="width: 6rem;">Rol</th>
-                <th style="width: 10rem;">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let user of data">
-                <td>
-                  {{ user.usu_nom_usu }}
-                </td>
-                <td>
-                  {{ user.usu_nombres }}
-                </td>
-                <td>
-                  {{ user.usu_apellidos }}
-                </td>
-                <td>
-                  {{ user.usu_correo }}
-                </td>
-                <td>
-                  {{ user.usu_telefono }}
-                </td>
-                <td>
-                  {{ user.usu_rol }}
-                </td>
-                <td>
-                  <ion-button class="btn-ver">
-                    <ion-icon name="eye" />
-                  </ion-button>
-                  <ion-button class="btn-editar">
-                    <ion-icon name="pencil" />
-                  </ion-button>
-                  <ion-button class="btn-eliminar">
-                    <ion-icon name="trash" />
-                  </ion-button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <ion-grid class="tabla-usuarios">
+
+            <!-- Encabezado -->
+            <ion-row class="header-row">
+              <ion-col size="1"><strong>Usuario</strong></ion-col>
+              <ion-col size="2"><strong>Nombre(s)</strong></ion-col>
+              <ion-col size="2"><strong>Apellidos</strong></ion-col>
+              <ion-col size="2"><strong>Correo</strong></ion-col>
+              <ion-col size="1"><strong>Teléfono</strong></ion-col>
+              <ion-col size="2"><strong>Rol</strong></ion-col>
+              <ion-col size="2"><strong>Acciones</strong></ion-col>
+            </ion-row>
+
+            <!-- Filas dinámicas -->
+            <ion-row *ngFor="let user of dataUser" class="body-row">
+              <ion-col size="1">{{ user.usu_nom_usu }}</ion-col>
+              <ion-col size="2">{{ user.usu_nombres }}</ion-col>
+              <ion-col size="2">{{ user.usu_apellidos }}</ion-col>
+              <ion-col size="2">{{ user.usu_correo }}</ion-col>
+              <ion-col size="1">{{ user.usu_telefono }}</ion-col>
+              <ion-col size="2">{{ user.usu_rol }}</ion-col>
+              <ion-col size="2">
+                <ion-button class="btn-ver" size="small">
+                  <ion-icon name="eye" />
+                </ion-button>
+                <ion-button class="btn-editar" size="small">
+                  <ion-icon name="pencil" />
+                </ion-button>
+                <ion-button class="btn-eliminar" size="small">
+                  <ion-icon name="trash" />
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </div>
+
+        <!-- 🔹 Paginación -->
         <ion-row class="paginacion-wrapper ion-justify-content-center ion-align-items-center">
-          <!-- Botón página anterior -->
           <ion-col size="auto">
             <ion-button fill="clear" class="nav-btn" (click)="cambiarPagina(-1)"
               [disabled]="currentPage === 1 || isLoading">
@@ -112,23 +105,20 @@
             </ion-button>
           </ion-col>
 
-          <!-- Página actual -->
           <ion-col size="auto">
             <ion-input type="number" [(ngModel)]="currentPage" (ionChange)="onInputChange()" min="1" class="page-input"
               [disabled]="isLoading">
             </ion-input>
           </ion-col>
 
-          <!-- Botón página siguiente -->
           <ion-col size="auto">
             <ion-button fill="clear" class="nav-btn" (click)="cambiarPagina(1)" [disabled]="isLoading">
               <ion-icon name="chevron-forward-outline"></ion-icon>
             </ion-button>
           </ion-col>
 
-          <!-- Texto total -->
-          <ion-col sizeXs="12" sizeMd="12" class="total-info">
-            Página {{ itemsPerPage }} • Total: {{ totalRegistros }} registros
+          <ion-col size-xs="12" size-md="12" class="total-info">
+            Página {{ currentPage }} de {{ totalPaginas }} • Total: {{ totalRegistros }} registros
           </ion-col>
         </ion-row>
       </ion-card-content>
