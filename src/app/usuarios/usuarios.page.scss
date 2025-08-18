@@ -1,5 +1,7 @@
 .div-tabla {
-    overflow: auto;
+    width: 100%;
+    overflow-x: auto; /* solo horizontal */
+    -webkit-overflow-scrolling: touch; /* para smooth scroll en móvil */
 }
 
 ion-row {
@@ -126,8 +128,9 @@ ion-card {
 
 /* Contenedor de la tabla */
 .tabla-usuarios {
-  overflow-x: auto;
-  border-radius: 10px;
+  min-width: 800px; /* ancho mínimo para la tabla */
+  width: 100%;
+  border-spacing: 0;
 }
 
 /* Encabezado */
