@@ -181,3 +181,56 @@ ion-button.btn-eliminar {
   --background: var(--ion-color-danger);
 }
 
+ion-modal.modal-card {
+  --width: min(880px, calc(100% - 48px));  /* margen lateral seguro */
+  --max-width: 880px;
+  --height: auto;
+  --max-height: calc(100% - 48px);
+  --border-radius: 18px;
+  --backdrop-opacity: .35;
+}
+
+ion-card.card-modal {
+  width: auto;
+  background: var(--ion-color-white);
+  color: var(--ion-color-dark);
+  border-radius: 15px;
+  overflow-x: auto;
+  overflow-y: auto;
+
+  .card-modal-input{
+    border: 2px solid var(--ion-color-primary);
+    --border-radius: 10px;
+    border-radius: 10px;
+    --background: var(--ion-color-input-medium);
+    color: var(--ion-color-dark);
+    font-size: 1rem;
+    font-weight: 600;
+    min-height: 2.5rem;
+    min-width: 10rem;
+    width: 100% !important;
+    --padding-start: 0.5rem;
+    --padding-end: 2rem;
+    margin: 1px 3px;
+  }
+
+  .card-modal-select{
+    border: 2px solid var(--ion-color-primary);
+    --border-radius: 10px;
+    border-radius: 10px;
+    --background: var(--ion-color-input-medium);
+    color: var(--ion-color-dark);
+    font-size: 1rem;
+    font-weight: 500;
+    min-height: 2.5rem;
+    min-width: 10rem;
+    width: 100% !important;
+    --padding-start: 0.5rem;
+    --padding-end: 2rem;
+    margin: 1px 3px;
+  }
+}
+
+.ng-modal {
+  overflow: scroll;
+}

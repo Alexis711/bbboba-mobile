@@ -34,7 +34,7 @@
             <div class="grupo-derecho">
               <ion-button class="btn-mostrar" (click)="abrirPopoverLimite($event)">
                 <span>Mostrar: {{ itemsPerPage }}</span>
-                <ion-icon slot="end" name="caret-down"></ion-icon>
+                <ion-icon slot="end" name="caret-down" />
               </ion-button>
               <ion-popover #popoverLimite [isOpen]="isPopoverLimiteAbierto" [event]="eventoPopoverLimite"
                 [dismissOnSelect]="false" (didDismiss)="isPopoverLimiteAbierto = false">
@@ -80,12 +80,12 @@
               <ion-col size="2">{{ user.usu_apellidos }}</ion-col>
               <ion-col size="2">{{ user.usu_correo }}</ion-col>
               <ion-col size="1">{{ user.usu_telefono }}</ion-col>
-              <ion-col size="2">{{ user.usu_rol }}</ion-col>
+              <ion-col size="2">{{ onTipoRol(user.usu_rol) }}</ion-col>
               <ion-col size="2">
-                <ion-button class="btn-ver" size="small">
+                <ion-button class="btn-ver" size="small" (click)="abrirModal(user, 'ver')">
                   <ion-icon name="eye" />
                 </ion-button>
-                <ion-button class="btn-editar" size="small">
+                <ion-button class="btn-editar" size="small" (click)="abrirModal(user, 'editar')">
                   <ion-icon name="pencil" />
                 </ion-button>
                 <ion-button class="btn-eliminar" size="small">
@@ -95,13 +95,126 @@
             </ion-row>
           </ion-grid>
         </div>
+        <ion-modal [isOpen]="modalAbierto" (didDismiss)="cerrarModal()" cssClass="modal-card">
+          <ng-template class="ng-modal">
+            <ion-card class="card-modal">
+              <ion-card-header>
+                <ion-card-title>
+                  {{ modoModal === 'ver' ? 'Detalle de Usuario' : 'Editar Usuario' }}
+                </ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <form [formGroup]="formUsuario" (ngSubmit)="guardarModal()">
+                  <ion-row>
+                    <!--Nombre usuario-->
+                    <ion-col sizeMd="4" sizeXs="12">
+                      <ion-label position="stacked">
+                        Usuario <ion-text color="danger">*</ion-text>
+                      </ion-label>
+                      <ion-input 
+                        class="card-modal-input"
+                        formControlName="usu_nom_usu" placeholder="Ej: jperez" />
+                    </ion-col>
+                    <ion-note color="danger"
+                      *ngIf="formUsuario.get('usu_nom_usu')?.touched && formUsuario.get('usu_nom_usu')?.invalid">
+                      Mínimo 3 caracteres.
+                    </ion-note>
+                    <!--Rol-->
+                    <ion-col sizeMd="5" sizeXs="12">
+                      <ion-label position="stacked">
+                        Rol <ion-text color="danger">*</ion-text>
+                      </ion-label>
+                      <ion-select 
+                        class="card-modal-select"
+                        formControlName="usu_rol" 
+                        interface="popover" 
+                        placeholder="Selecciona un rol">
+                        <ion-select-option *ngFor="let r of roles" [value]="r.value">{{ r.label }}</ion-select-option>
+                      </ion-select>
+                    </ion-col>
+                    <ion-note color="danger"
+                      *ngIf="formUsuario.get('usu_rol')?.touched && formUsuario.get('usu_rol')?.invalid">
+                    </ion-note>
+
+                    <!--Estatus-->
+                    <ion-col sizeMd="3" sizeXs="12">
+                      <ion-label position="stacked">
+                        Estatus <ion-text color="danger">*</ion-text>
+                      </ion-label>
+                      <ion-select 
+                        class="card-modal-select"
+                        formControlName="usu_status" 
+                        interface="popover">
+                        <ion-select-option *ngFor="let e of estatus" [value]="e.value">{{ e.label }}</ion-select-option>
+                      </ion-select>
+                    </ion-col>
+
+                    <!--Nombres-->
+                    <ion-col sizeMd="6" sizeXs="12">
+                      <ion-label position="stacked">
+                        Nombres <ion-text color="danger">*</ion-text>
+                      </ion-label>
+                      <ion-input 
+                        class="card-modal-input"
+                        formControlName="usu_nombres" placeholder="Ej: Juan Carlos" />
+                    </ion-col>
+                    <ion-note color="danger"
+                      *ngIf="formUsuario.get('usu_nombres')?.touched && formUsuario.get('usu_nombres')?.invalid">
+                    </ion-note>
+
+                    <!--Apellidos-->
+                    <ion-col sizeMd="6" sizeXs="12">
+                      <ion-label position="stacked">
+                        Apellidos <ion-text color="danger">*</ion-text>
+                      </ion-label>
+                      <ion-input 
+                        class="card-modal-input"
+                        formControlName="usu_apellidos" 
+                        placeholder="Ej: Pérez Gómez" />
+                    </ion-col>
+                    <ion-note color="danger"
+                      *ngIf="formUsuario.get('usu_apellidos')?.touched && formUsuario.get('usu_apellidos')?.invalid">
+                    </ion-note>
+
+                    <!--Contraseña-->
+                    <ion-col sizeMd="6" sizeXs="12" *ngIf="modoModal === 'editar'">
+                      <ion-label position="stacked">Nueva contraseña</ion-label>
+                      <ion-item class="card-modal-input" lines="none">
+                        <ion-input
+                          [type]="ocultarPass ? 'password' : 'text'"
+                          formControlName="password"
+                          placeholder="(Dejar vacío para no cambiar)">
+                        </ion-input>
+                        <ion-button fill="clear" slot="end" type="button" (click)="ocultarPass = !ocultarPass">
+                          <ion-icon [name]="ocultarPass ? 'eye-off' : 'eye'" color="primary"></ion-icon>
+                        </ion-button>
+                      </ion-item>
+                      <ion-note color="medium">Mínimo 6 caracteres.</ion-note>
+                    </ion-col>
+                    <ion-note color="danger"
+                      *ngIf="formUsuario.get('usu_clave')?.touched && formUsuario.get('usu_clave')?.invalid">
+                    </ion-note>
+                  </ion-row>
+                  <div class="botonera">
+                    <ion-button color="medium" *ngIf="modoModal==='ver'" type="button" (click)="habilitarEdicion()">
+                      Editar
+                    </ion-button>
+                    <ion-button color="primary" *ngIf="modoModal==='editar'" type="submit">
+                      Guardar
+                    </ion-button>
+                  </div>
+                </form>
+              </ion-card-content>
+            </ion-card>
+          </ng-template>
+        </ion-modal>
 
         <!-- 🔹 Paginación -->
         <ion-row class="paginacion-wrapper ion-justify-content-center ion-align-items-center">
           <ion-col size="auto">
             <ion-button fill="clear" class="nav-btn" (click)="cambiarPagina(-1)"
               [disabled]="currentPage === 1 || isLoading">
-              <ion-icon name="chevron-back-outline"></ion-icon>
+              <ion-icon name="chevron-back-outline" />
             </ion-button>
           </ion-col>
 
@@ -113,7 +226,7 @@
 
           <ion-col size="auto">
             <ion-button fill="clear" class="nav-btn" (click)="cambiarPagina(1)" [disabled]="isLoading">
-              <ion-icon name="chevron-forward-outline"></ion-icon>
+              <ion-icon name="chevron-forward-outline" />
             </ion-button>
           </ion-col>
 
