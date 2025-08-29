@@ -24,7 +24,7 @@ export class UsuariosPage implements OnInit {
   isPopoverLimiteAbierto = false;
   eventoPopoverLimite: Event | null = null;
   passwordActual = '';
-  
+
   roles = [
     { label: 'SuperAdmin', value: 0 },
     { label: 'Administrador', value: 1 },
@@ -35,13 +35,13 @@ export class UsuariosPage implements OnInit {
     { label: 'Activado', value: 1 },
     { label: 'Desactivado', value: 0 },
   ];
-
+  modalEliminarAbierto = false;
+  isEliminando = false;
   modalAbierto = false;
   modoModal: ModoModal = 'ver';
   formUsuario!: FormGroup;
   ocultarPass = true;
   usuarioSeleccionado: Partial<Usuarios> | null = null;
-
 
   constructor(
     private usuarioServ: UsuariosService,
@@ -50,13 +50,13 @@ export class UsuariosPage implements OnInit {
 
   ngOnInit() {
     this.initForm();
-    this.onListUser();
+    this.onListUsers();
   }
-  
-  onTipoRol = (tipo: number | string): string =>
-  this.roles.find(r => String(r.value) === String(tipo))?.label ?? String(tipo);
 
-  onListUser() {
+  onTipoRol = (tipo: number | string): string =>
+    this.roles.find(r => String(r.value) === String(tipo))?.label ?? String(tipo);
+
+  onListUsers() {
     const payload = { limit: this.itemsPerPage.toString(), page: this.currentPage.toString() };
     this.usuarioServ.getUsers(payload).subscribe({
       next: (resp: any) => {
@@ -76,6 +76,19 @@ export class UsuariosPage implements OnInit {
 
       },
 
+    });
+  }
+
+  onUpdateUser(payload: any) {
+    this.usuarioServ.putUser(payload).subscribe({
+      next: (resp: any) => {
+        console.log(resp);
+      },
+      error: (err: any) => {
+        this.dataUser = [];
+        console.log('Error', err);
+
+      },
     });
   }
 
@@ -99,7 +112,7 @@ export class UsuariosPage implements OnInit {
 
   irAPagina(pagina: number) {
     this.currentPage = pagina;
-    this.onListUser()
+    this.onListUsers()
   }
 
   onInputChange() {
@@ -113,12 +126,14 @@ export class UsuariosPage implements OnInit {
 
   private initForm() {
     this.formUsuario = this.fb.group({
-      usu_nom_usu:   ['', [Validators.required, Validators.minLength(3)]],
+      usu_nom_usu: ['', [Validators.required, Validators.minLength(3)]],
       usu_nombres: ['', [Validators.required, Validators.minLength(2)]],
       usu_apellidos: ['', [Validators.required, Validators.minLength(2)]],
-      usu_clave: ['', [Validators.minLength(6)]], // opcional
-      usu_rol: ['', [Validators.required]],   // guarda '0' | '1' | '2'
-      usu_status: ['', [Validators.required]],    // guarda '1' | '0'
+      usu_correo: ['', [Validators.required, Validators.minLength(2)]],
+      usu_telefono: ['', [Validators.required, Validators.minLength(2)]],
+      usu_clave: ['', [Validators.minLength(6)]],
+      usu_rol: ['', [Validators.required]],
+      usu_status: ['', [Validators.required]],
     });
   }
 
@@ -130,14 +145,16 @@ export class UsuariosPage implements OnInit {
 
     // normaliza estatus a '1'/'0'
     this.formUsuario.reset({
-      usu_nom_usu:   user?.usu_nom_usu ?? '',
+      usu_nom_usu: user?.usu_nom_usu ?? '',
       usu_nombres: user?.usu_nombres ?? '',
       usu_apellidos: user?.usu_apellidos ?? '',
+      usu_correo: user?.usu_correo ?? '',
+      usu_telefono: user?.usu_telefono ?? '',
       use_clave: '',
       usu_rol: user?.usu_rol ?? null,
       usu_status: user?.usu_estatus ?? '',
     });
-    
+
     this.passwordActual = user?.usu_clave ?? '';
 
     if (modo === 'ver') this.formUsuario.disable();
@@ -174,17 +191,44 @@ export class UsuariosPage implements OnInit {
       payload.password = password.trim();
     }
 
-    // ===== Llama a tu backend aquí =====
-    // this.usuarioServ.updateUser(payload).subscribe({
-    //   next: () => {
-    //     this.cerrarModal();
-    //     this.onListUser();
-    //   },
-    //   error: () => { /* mostrar error */ }
-    // });
+    console.log('Pay', payload);
 
+    this.onUpdateUser(payload);
     // temporal (UI): cerrar y refrescar
     this.cerrarModal();
-    this.onListUser();
+    this.onListUsers();
+  }
+
+  abrirModalEliminar(user: Usuarios) {
+    if (!user?.usu_id) { console.warn('Usuario sin usu_id'); return; }
+    this.usuarioSeleccionado = user;
+    this.modalEliminarAbierto = true;
+  }
+
+  cerrarModalEliminar() {
+    this.modalEliminarAbierto = false;
+    this.usuarioSeleccionado = null;
+    this.isEliminando = false;
+  }
+
+  confirmarEliminar() {
+    if (!this.usuarioSeleccionado?.usu_id) return;
+
+    this.isEliminando = true;
+
+    this.usuarioServ.deleteUser(this.usuarioSeleccionado).subscribe({
+      next: (resp: any) => {
+        console.log(resp)
+        this.cerrarModalEliminar();
+        const unicoEnPagina = this.dataUser.length === 1 && this.currentPage > 1;
+        if (unicoEnPagina) this.currentPage -= 1;
+
+        this.onListUsers();
+      },
+      error: (err: any) => {
+        this.isEliminando = false;
+        console.error('Error al eliminar:', err);
+      }
+    });
   }
 }

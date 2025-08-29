@@ -198,6 +198,10 @@ ion-card.card-modal {
   overflow-x: auto;
   overflow-y: auto;
 
+  ion-card-header {
+    text-align: center;
+  }
+
   .card-modal-input{
     border: 2px solid var(--ion-color-primary);
     --border-radius: 10px;
@@ -229,6 +233,10 @@ ion-card.card-modal {
     --padding-end: 2rem;
     margin: 1px 3px;
   }
+}
+
+.card-modal-parrafo {
+  font-size: medium;
 }
 
 .ng-modal {

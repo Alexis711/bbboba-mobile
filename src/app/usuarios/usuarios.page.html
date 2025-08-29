@@ -88,19 +88,23 @@
                 <ion-button class="btn-editar" size="small" (click)="abrirModal(user, 'editar')">
                   <ion-icon name="pencil" />
                 </ion-button>
-                <ion-button class="btn-eliminar" size="small">
+                <ion-button class="btn-eliminar" size="small" (click)="abrirModalEliminar(user)">
                   <ion-icon name="trash" />
                 </ion-button>
               </ion-col>
             </ion-row>
           </ion-grid>
         </div>
+
+        <!--MODAL EDITAR Y VER-->
         <ion-modal [isOpen]="modalAbierto" (didDismiss)="cerrarModal()" cssClass="modal-card">
           <ng-template class="ng-modal">
             <ion-card class="card-modal">
               <ion-card-header>
                 <ion-card-title>
-                  {{ modoModal === 'ver' ? 'Detalle de Usuario' : 'Editar Usuario' }}
+                  <strong>
+                    {{ modoModal === 'ver' ? 'Detalle de Usuario' : 'Editar Usuario' }}
+                  </strong>
                 </ion-card-title>
               </ion-card-header>
               <ion-card-content>
@@ -176,13 +180,40 @@
                       *ngIf="formUsuario.get('usu_apellidos')?.touched && formUsuario.get('usu_apellidos')?.invalid">
                     </ion-note>
 
+                    <!--Correo-->
+                    <ion-col sizeMd="6" sizeXs="12">
+                      <ion-label position="stacked">
+                        Correo <ion-text color="danger">*</ion-text>
+                      </ion-label>
+                      <ion-input 
+                        class="card-modal-input"
+                        formControlName="usu_correo" placeholder="Ej: Juan Carlos" />
+                    </ion-col>
+                    <ion-note color="danger"
+                      *ngIf="formUsuario.get('usu_correo')?.touched && formUsuario.get('usu_correo')?.invalid">
+                    </ion-note>
+
+                    <!--Telefono-->
+                    <ion-col sizeMd="6" sizeXs="12">
+                      <ion-label position="stacked">
+                        Telefono <ion-text color="danger">*</ion-text>
+                      </ion-label>
+                      <ion-input 
+                        class="card-modal-input"
+                        formControlName="usu_telefono" 
+                        placeholder="Ej: Pérez Gómez" />
+                    </ion-col>
+                    <ion-note color="danger"
+                      *ngIf="formUsuario.get('usu_telefono')?.touched && formUsuario.get('usu_telefono')?.invalid">
+                    </ion-note>
+
                     <!--Contraseña-->
                     <ion-col sizeMd="6" sizeXs="12" *ngIf="modoModal === 'editar'">
                       <ion-label position="stacked">Nueva contraseña</ion-label>
                       <ion-item class="card-modal-input" lines="none">
                         <ion-input
                           [type]="ocultarPass ? 'password' : 'text'"
-                          formControlName="password"
+                          formControlName="usu_clave"
                           placeholder="(Dejar vacío para no cambiar)">
                         </ion-input>
                         <ion-button fill="clear" slot="end" type="button" (click)="ocultarPass = !ocultarPass">
@@ -204,6 +235,37 @@
                     </ion-button>
                   </div>
                 </form>
+              </ion-card-content>
+            </ion-card>
+          </ng-template>
+        </ion-modal>
+
+        <!--MDOAL ELIMINAR-->
+        <ion-modal [isOpen]="modalEliminarAbierto" (didDismiss)="cerrarModalEliminar()" cssClass="modal-card">
+          <ng-template>
+            <ion-card class="card-modal">
+              <ion-card-header>
+                <ion-card-title>
+                  <strong>Eliminar usuario</strong>
+                </ion-card-title>
+              </ion-card-header>
+        
+              <ion-card-content>
+                <p class="card-modal-parrafo">
+                  ¿Seguro que deseas eliminar al usuario
+                  <strong>{{ usuarioSeleccionado?.usu_nom_usu }}</strong>?
+                </p>
+        
+                <div class="botonera" style="margin-top:1rem;">
+                  <ion-button color="medium" type="button" (click)="cerrarModalEliminar()" [disabled]="isEliminando">
+                    Cancelar
+                  </ion-button>
+        
+                  <ion-button color="danger" type="button" (click)="confirmarEliminar()" [disabled]="isEliminando">
+                    <ion-spinner name="dots" *ngIf="isEliminando" style="margin-right:.5rem;"></ion-spinner>
+                    Eliminar
+                  </ion-button>
+                </div>
               </ion-card-content>
             </ion-card>
           </ng-template>
