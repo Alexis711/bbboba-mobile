@@ -16,9 +16,40 @@ export class UsuariosService {
   ) { }
 
   getUsers(payload: any) {
-    return this.http.get(this.url + 'todos', {
-      headers: this.headers,
-      params: payload,
-    });
+    return this.http.get(
+      `${this.url}todos`, 
+      {
+        headers: this.headers,
+        params: payload,
+      });
+  }
+
+  createUser(payload: any) {
+    return this.http.post(
+      `${this.url}crear`, 
+      payload, 
+      { 
+        headers: this.headers
+      }
+    );
+  }
+
+  putUser(payload: any) {
+    return this.http.put(
+      `${this.url}editar`,
+      payload, 
+      {
+        headers: this.headers
+      }
+  );
+  }
+
+  deleteUser(payload: any) {
+    return this.http.put(
+      `${this.url}eliminar`,
+      payload, 
+      {
+        headers: this.headers,
+      });
   }
 }
